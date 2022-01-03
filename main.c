@@ -38,16 +38,16 @@ int lsh_mkdir(char **args);
   List of builtin commands, followed by their corresponding functions.
  */
 char *builtin_str[] = {
-  "cd",
-  "help",
-  "exit",
-  "ls",
-  "cp",
-  "mv",
-  "clear",
-  "pwd",
-  "touch",
-  "mkdir"
+  "mycd",
+  "myhelp",
+  "myexit",
+  "myls",
+  "mycp",
+  "mymv",
+  "myclear",
+  "mypwd",
+  "mytouch",
+  "mymkdir"
 };
 
 int (*builtin_func[]) (char **) = {
@@ -230,6 +230,11 @@ int lsh_pwd(char **args)
 
 int lsh_touch(char **args)
 {
+	if (args[1] == NULL)
+	{
+		printf("Error: No arguments passed!\n");
+		return 1;
+	}
 	int i = 1;
         int f = open(args[i],O_WRONLY|O_APPEND|O_CREAT,0777);
         while(f != -1)
@@ -244,6 +249,12 @@ int lsh_touch(char **args)
 
 int lsh_mkdir(char **args)
 {
+        if (args[1] == NULL)
+        {
+                printf("Error: No arguments passed!\n");
+		return 1;
+        }
+
 	int i = 2;
         int err;
         if(mkdir(args[1],0777) == -1)
